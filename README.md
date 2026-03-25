@@ -38,3 +38,6 @@ A sci-fi movie-quality personal portfolio that IS a terminal: the visitor naviga
 | [26-content-text.md](specs/26-content-text.md) | Complete verbatim copy — man page, BIOS sequence, idle log lines, vim file, humans.txt, security.txt |
 | [27-sound-design.md](specs/27-sound-design.md) | Web Audio API architecture, 15 sound events, Konami dial-up modem sequence, sfx toggle UI |
 | [28-visual-obsessions.md](specs/28-visual-obsessions.md) | Obsession-level CSS: print styles, animation curves, modal backdrop, separators, zoom resilience |
+| [29-visual-depth-and-layering.md](specs/29-visual-depth-and-layering.md) | 17 multi-layer techniques: 5-layer background, phosphor glow, SVG CRT filter, grain canvas, 7-shadow bezel |
+| [30-animation-choreography.md](specs/30-animation-choreography.md) | Full animation direction: boot film sequence, per-section entrance choreography, exact timing overlaps |
+| [31-production-polish.md](specs/31-production-polish.md) | Senior-level polish: typography feature settings, complete color state matrix, spacing grid, border rules |
