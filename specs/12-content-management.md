@@ -8,43 +8,73 @@ All dynamic content lives in version-controlled JSON files. The JavaScript reads
 
 ## `/data/projects.json`
 
-Array of project objects. Schema:
+Array of project objects. Full schema (see also `specs/21-error-states-and-offline.md` for failure handling):
 
 ```json
 [
   {
     "id": "project-slug",
-    "name": "Project Name",
-    "codename": "OPERATION CODENAME",
-    "description": "1–2 sentence plain-language summary of what the project does.",
+    "referenceId": "PRJ-0042",
+    "name": "Project Real Name",
+    "codename": "OPERATION MIDNIGHT REFACTOR",
+    "tagline": "One-sentence dramatic teaser for the card.",
+    "description": "2–3 sentence plain-language summary displayed on the card.",
+    "longDescription": [
+      "First full paragraph — the problem or context.",
+      "Second paragraph — what was built and the key decisions.",
+      "Third paragraph — the outcome, scale, or measurable result."
+    ],
     "tags": ["PostgreSQL", "Node.js", "Docker"],
+    "domain": "FINTECH",
     "year": 2024,
     "url": "https://github.com/...",
     "demoUrl": "https://live-demo.example.com",
-    "featured": true,
-    "status": "active"
+    "screenshotUrl": "/img/projects/project-slug.png",
+    "featured": false,
+    "status": "active",
+    "classificationLevel": "PUBLIC",
+    "missionLog": [
+      { "date": "2023-11", "event": "Initial architecture deployed to production." },
+      { "date": "2024-01", "event": "Scaled to 50K daily active users." }
+    ]
   }
 ]
 ```
 
 **Field definitions:**
-| Field | Type | Description |
-|---|---|---|
-| `id` | string | URL-safe slug |
-| `name` | string | Real project name |
-| `codename` | string | Dossier headline (stylized / dramatic) |
-| `description` | string | 1–2 sentences, plain language |
-| `tags` | string[] | Tech stack — displayed as "SYSTEMS USED" |
-| `year` | number | Year initiated |
-| `url` | string | Source or primary link |
-| `demoUrl` | string? | Live demo link (optional) |
-| `featured` | boolean | If true, shown full-width above the grid |
-| `status` | enum | `active` / `archived` / `stealth` |
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `id` | string | Yes | URL-safe slug |
+| `referenceId` | string | Yes | Dossier ID e.g. `PRJ-0042` — padded to 4 digits |
+| `name` | string | Yes | Real project name |
+| `codename` | string | Yes | Dossier headline (stylized / dramatic) |
+| `tagline` | string | No | One dramatic sentence shown on card; falls back to `description` |
+| `description` | string | Yes | 2–3 sentences, plain language — shown on card |
+| `longDescription` | string[] | Yes | Array of paragraphs shown in modal only (min 2) |
+| `tags` | string[] | Yes | Tech stack — displayed as "SYSTEMS USED" |
+| `domain` | string | Yes | Industry tag: `FINTECH`, `DEVOPS-TOOLING`, `E-COMMERCE`, `REAL-TIME`, `INFRA`, `DATA`, `SYSTEMS`, `OPEN-SOURCE`, `CONSULTING`, `INTERNAL` |
+| `year` | number | Yes | Year initiated |
+| `url` | string | Yes | Source or primary link |
+| `demoUrl` | string | No | Live demo link |
+| `screenshotUrl` | string | No | Path to screenshot image; terminal placeholder shown if missing |
+| `featured` | boolean | Yes | If true, shown full-width above the grid |
+| `status` | enum | Yes | `active` / `deployed` / `archived` / `stealth` |
+| `classificationLevel` | enum | Yes | `PUBLIC` / `INTERNAL` / `RESTRICTED` |
+| `missionLog` | object[] | No | Timeline entries `{date: "YYYY-MM", event: "string"}`; section hidden if absent |
 
-**Status display mapping:**
-- `active` → `ACTIVE` badge (cyan)
-- `archived` → `ARCHIVED` badge (amber)
-- `stealth` → `CLASSIFIED` badge (red) — description shown but links hidden
+**Status → badge mapping:**
+| `status` | Badge | Color | Links |
+|---|---|---|---|
+| `active` | `ACTIVE` | cyan | Yes |
+| `deployed` | `DEPLOYED` | green | Yes |
+| `archived` | `ARCHIVED` | amber | Source only |
+| `stealth` | `CLASSIFIED` | red | None |
+
+**Minimum launch requirements:**
+- At least 6 projects populated
+- At least 1 with `featured: true`
+- At least 1 with a complete `missionLog`
+- At least 1 with `status: "stealth"` (provides a `CLASSIFIED` card)
 
 ---
 
