@@ -12,7 +12,7 @@ A sci-fi movie-quality personal portfolio that IS a terminal: the visitor naviga
 |---|---|
 | [01-overview.md](specs/01-overview.md) | Project goals, target audience, core sections |
 | [02-design.md](specs/02-design.md) | Aesthetic direction, color, typography, navigation overview |
-| [03-projects.md](specs/03-projects.md) | Dossier cards, modal detail view, filtering, data schema |
+| [03-projects.md](specs/03-projects.md) | Dossier cards, modal detail view, filtering |
 | [04-contact.md](specs/04-contact.md) | Sendmail-style form, contact details, social links |
 | [05-hero.md](specs/05-hero.md) | Interactive terminal prompt — all commands, UX edge cases, mobile |
 | [06-skills.md](specs/06-skills.md) | htop process monitor — columns, 80-tech roster, tooltips, sorting |
@@ -27,3 +27,8 @@ A sci-fi movie-quality personal portfolio that IS a terminal: the visitor naviga
 | [15-visual-system.md](specs/15-visual-system.md) | Full design tokens: colors, typography, spacing, borders, glow, z-index |
 | [16-nav-bar.md](specs/16-nav-bar.md) | Tmux status bar — exact layout, all elements, keyboard shortcuts, edge cases |
 | [17-acceptance-criteria.md](specs/17-acceptance-criteria.md) | Complete launch checklist — 15 categories, 100+ criteria |
+| [18-backend-api.md](specs/18-backend-api.md) | Contact form API contract, `/api/me` endpoint, spam protection |
+| [19-tech-stack-and-structure.md](specs/19-tech-stack-and-structure.md) | Vanilla JS + Vite, directory layout, npm scripts, browser targets |
+| [20-page-layout-and-scroll.md](specs/20-page-layout-and-scroll.md) | HTML structure, section ordering, scroll behavior, icons, 404 |
+| [21-error-states-and-offline.md](specs/21-error-states-and-offline.md) | Failed fetches, broken images, JS-disabled, graceful degradation |
+| [22-typewriter-primitive.md](specs/22-typewriter-primitive.md) | Reusable typewriter animation API, timing model, cancellation |
