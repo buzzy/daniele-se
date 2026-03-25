@@ -32,3 +32,9 @@ A sci-fi movie-quality personal portfolio that IS a terminal: the visitor naviga
 | [20-page-layout-and-scroll.md](specs/20-page-layout-and-scroll.md) | HTML structure, section ordering, scroll behavior, icons, 404 |
 | [21-error-states-and-offline.md](specs/21-error-states-and-offline.md) | Failed fetches, broken images, JS-disabled, graceful degradation |
 | [22-typewriter-primitive.md](specs/22-typewriter-primitive.md) | Reusable typewriter animation API, timing model, cancellation |
+| [23-more-easter-eggs.md](specs/23-more-easter-eggs.md) | 10 advanced easter eggs (#8–17): DevTools headers, CSS Morse code, console boot log, PGP treasure hunt |
+| [24-hidden-terminal-commands.md](specs/24-hidden-terminal-commands.md) | 20 undocumented terminal commands — git log, traceroute, SELECT, package managers, vim mode |
+| [25-micro-interactions.md](specs/25-micro-interactions.md) | 25 fine details: cursor morphing, rain proximity effect, spring animations, sound, marching ants |
+| [26-content-text.md](specs/26-content-text.md) | Complete verbatim copy — man page, BIOS sequence, idle log lines, vim file, humans.txt, security.txt |
+| [27-sound-design.md](specs/27-sound-design.md) | Web Audio API architecture, 15 sound events, Konami dial-up modem sequence, sfx toggle UI |
+| [28-visual-obsessions.md](specs/28-visual-obsessions.md) | Obsession-level CSS: print styles, animation curves, modal backdrop, separators, zoom resilience |
