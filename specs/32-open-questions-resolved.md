@@ -418,4 +418,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## D. Cross-Spec Contradictions (Resolved)
 
-*(Awaiting final resolution — will be appended when available.)*
+### D.1 — Focus Ring: Marching Ants Win
+
+**Marching ants are the intended implementation.** Spec 11's `outline: 2px solid #00ff41` was a baseline fallback-level requirement, not the ceiling. Spec 25's animated dashed ring (spec 25 #10) is the design intent for a site of this caliber.
+
+**Graceful degradation with no-JS fallback:**
+
+```css
+/* Base CSS fallback — always present, no JS required */
+:focus-visible {
+  outline: 2px solid #00ff9f;
+  outline-offset: 2px;
+}
+
+/* JS adds [data-focus-enhanced] to <html> after marching ants initialize.
+   Elements that have the animated ring then suppress the static outline. */
+[data-focus-enhanced] .focus-enhanced:focus-visible {
+  outline: none;  /* marching ants JS ring takes over */
+}
+```
+
+JS adds `data-focus-enhanced` to `<html>` on initialization. Without JS: every focused element shows the static `2px solid #00ff9f` outline — WCAG 2.1 AA compliant, on-brand, zero dependencies. Never no focus ring under any conditions.
+
+### D.2 — Email Obfuscation vs. Terminal `<a>` Tags
+
+**Two-layer rule — no contradiction when correctly separated:**
+
+- **SEO / noscript layer** (`<address id="contact">`): real `<a href="mailto:daniele@daniele.se">` tag — visible only to crawlers and screen readers, visually hidden once JS loads.
+- **Terminal UI layer** (`cat contact.txt` output): email displayed as styled plain text (`daniele@daniele.se`), rendered as a `<span>` with click-to-copy behavior (micro-interaction #23), visually underlined and terminal-green, but **no `href` attribute in the DOM**.
+
+The terminal output never emits a live `mailto:` link. "No plaintext email in page source" applies to the static HTML and terminal output. The SEO layer is the exception because it's structurally necessary for accessibility.
+
+### D.3 — Color Token Naming and Primary Green
+
+**Canonical primary green: `#00ff9f`** (more cyan-leaning, from spec 15).
+**Naming convention: `--color-*` prefix** (spec 15 pattern).
+
+Spec 31's `--green-base: #39ff14` (more yellow-green) is a secondary, high-contrast variant used for bar fills, success text, and border-focus states. It is not the universal primary.
+
+Role assignments:
+- `--color-green-primary: #00ff9f` — active nav tab, cursor blink, leading rain character, marching ants ring, CTAs
+- `--color-green-bright: #39ff14` — CPU bar fills, form success state, `text-shadow` glow cores, `border-focus`
+
+Spec 31's CSS block uses its own unprefixed names internally; whenever those are applied site-wide, they map to the `--color-*` tokens from spec 15. **Spec 15 is the single source of truth for all color tokens.**
+
+### D.4 — Skill Bar Spring Overshoot (Confirmed Consistent)
+
+No contradiction. `cubic-bezier(0.34, 1.56, 0.64, 1.0)` (spec 30's `--ease-spring`) produces approximately 5–8% overshoot, which fully satisfies spec 25's stated 4–6%. All three specs are consistent: spec 25 defines the behavior, spec 30 defines the easing function, spec 31 references `--ease-spring` for CPU bars. The correct bezier is `(0.34, 1.56, 0.64, 1.0)` — not `(0.175, 0.885, 0.32, 1.275)` which was a different variant mentioned in spec 28. Use `(0.34, 1.56, 0.64, 1.0)` everywhere.
+
+### D.5 — Featured Project Visual Treatment
+
+Featured cards render **above the grid at full width**, before the filter buttons take effect. Treatment:
+
+- `grid-column: 1 / -1` — spans full width
+- Label above the card: `// PRIORITY-1 · FEATURED OPERATION · CLASSIFICATION: PUBLIC`
+- `border-left: 3px solid var(--color-green-primary)` with `padding-left: var(--space-4)`
+- Terminal prompt prefix changes from `$` to `#` on the card title
+- Blinking cursor at the end of the card title (persistent, not just hover)
+- Shows an extra stat or notable quote not visible on grid cards
+- **No additional stamp alongside CLASSIFIED** — the `PRIORITY-1` label IS the featured marker. Two stamps creates clutter.
+
+### D.6 — Konami Code Sequence and Terminal Timing
+
+The sequence is additive and sequential:
+
+1. Konami code entered → site glitch/scanline effect fires
+2. `SYSTEM BREACH DETECTED` alert displays with spoof readout
+3. Breach animation plays for its full duration
+4. Breach animation fades out
+5. **500ms silence** (intentional beat — system taking control)
+6. Full-screen Konami terminal opens
+
+The 500ms gap after the breach animation makes the terminal appear as if a system is seizing control, rather than an instant visual transition.
+
+### D.7 — Static HTML Shell: What Is Present Without JS
+
+**Present and visible without JS:**
+- `<h1>Daniele Testa</h1>` with title and years of experience
+- `<section id="about">` — plain-text bio paragraph (no man page formatting)
+- `<ul id="skills">` — each technology as a `<li>` element
+- `<section id="projects">` — each project as `<article>` with title, one-sentence description, tech tags
+- `<address id="contact">` — real `<a href="mailto:daniele@daniele.se">` and social `<a>` links
+
+**NOT in the noscript layer:**
+- Terminal hero UI, typewriter effects, boot sequence
+- htop table formatting, interactive commands
+- Marching ants focus rings
+- `cat contact.txt` terminal output block
+- Any JS-dependent animations or interactions
+
+A `<noscript>` block displays: `"This site requires JavaScript for the interactive terminal experience."` The noscript layer is semantic HTML optimized for crawlers and screen readers, not users.
+
+### D.8 — Custom Scrollbar on Mobile: Correct Media Query
+
+**Use `@media (pointer: coarse)`**, not a viewport width breakpoint.
+
+A tablet at 1024px wide still has a coarse pointer and should use standard scrollbar behavior. A desktop with a narrow browser window still has a fine pointer and should show the custom scrollbar. Pointer type is the correct semantic test for "touch device without a mouse."
+
+```css
+@media (pointer: coarse) {
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+}
+```
+
+### D.9 — Boot Sequence Content Authority
+
+**Spec 26 is authoritative for all boot sequence copy.** Spec 09 is authoritative for timing, skip behavior, transition mechanics, and performance constraints. When they conflict on words: spec 26 wins. When they conflict on behavior/timing: spec 09 wins. The two specs are now complementary, not competing.
+
+### D.10 — Marching Ants Fallback (Same as D.1)
+
+See D.1. The two-tier pattern (`data-focus-enhanced` attribute) ensures WCAG 2.1 AA compliance under all conditions: JS loaded → marching ants. JS not loaded → static green outline. Never zero focus indicator.
